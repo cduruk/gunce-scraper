@@ -1,56 +1,40 @@
 # Tum haklari serbesttir.
 # cduruk, wizard
-
+ 
 require 'rubygems'
 require 'mechanize'
 require 'hpricot'
+require 'handlers' 
 
 if ARGV.length < 2
   puts "Kullanici adi ve sifre girmen lazim."
   exit
 end
-
+ 
 agent = WWW::Mechanize.new { |agent|
   agent.user_agent_alias = 'Mac Safari'
 }
-
+ 
 page = agent.get 'http://www.guncem.com'
-
+ 
 form = page.forms.first
-
-notification_flag = false #=> Keep track if there is actually a notification  
-
+ 
 form['nick'] = ARGV[0]
 form['pass'] = ARGV[1]
 doc = form.click_button
-
+ 
 result = Hpricot(doc.root.to_s)
-
-if !((result/".f")[5].inner_html.strip).include? "Yorumunu"
-  puts "Gunce Yorumlari \t VAR."
-  notification_flag = true
-end
-
-# after the 5th match, existence of the remaining information  blocks are not guaranteed
-# instead of static conditional blocks, dynamic pattern matching rules can be applied
-
-definitions = [
-  {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR."},
-  {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR."},
-  {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR."},
-  {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR."}
-]
-
+ 
 containers = (result/".f")
-containers.each do |container|
-  definitions.length.times do |i|
-    if (container.innerText).include? definitions[i][:pattern]
-      puts definitions[i][:text_found]
-      notification_flag = true
-    end
-  end
-end
 
-if !notification_flag
+chain = HandlerChain.new
+chain.Add DiaryCommentHandler.new
+chain.Add FollowupCommentHandler.new
+chain.Add MessageHandler.new
+chain.Add UserCommentHandler.new
+chain.Add FriendHandler.new
+chain.Process containers
+
+if !chain.Handled
   puts "Hic bir yeni gelisme yok"
 end
