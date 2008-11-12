@@ -36,10 +36,10 @@ end
 # instead of static conditional blocks, dynamic pattern matching rules can be applied
 
 definitions = [
-    {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR.", :text_notfound => "Yeni Yorum \t\t YOK.", :found => false},
-    {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR.", :text_notfound => "Yeni Mesaj \t\t YOK.", :found => false},
-    {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR.", :text_notfound => "Yeni Kullanici Yorumu \t YOK.", :found => false},
-    {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR.", :text_notfound => "Dost Talebi \t\t YOK.", :found => false}
+    {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR."},
+    {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR."},
+    {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR."},
+    {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR."}
 ]
 
 containers = (result/".f")
