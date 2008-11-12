@@ -110,7 +110,7 @@ class FriendHandler
   end
 
   def Handle(context)
-    number = context.to_s.slice(/\d/)
+    number = context.to_s.slice(/\d/) # => match any number
     puts "Dost Talebi \t\t #{number}"
   end
 end
