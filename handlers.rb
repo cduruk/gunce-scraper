@@ -5,6 +5,7 @@
 # If the context has been handled by any of the handlers, the "Handled" flag is set.
 
 # DiaryComment >> FollowUpComment >> Message >> UserComment >> Friend
+require 'Hpricot'
 
 class HandlerChain
   attr_reader :Handled
@@ -49,7 +50,7 @@ class DiaryCommentHandler
   include IHandler
 
   def initialize
-    @pattern = /\w/
+    @pattern = /Yorumlar/
   end
 
   def Handle(context)
