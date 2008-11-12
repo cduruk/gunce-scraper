@@ -54,7 +54,9 @@ class DiaryCommentHandler
   end
 
   def Handle(context)
-    puts "Gunce Yorumlari \t VAR."
+    line = Hpricot(context.to_s.strip)
+    number = line.search("b").innerHTML
+    puts "Gunce Yorumlari \t #{number}"
   end
 end
 
@@ -66,7 +68,9 @@ class FollowupCommentHandler
   end
 
   def Handle(context)
-    puts "Yeni Yorum \t\t VAR."
+    line = Hpricot(context.to_s.strip)
+    number = line.search("b").innerHTML
+    puts "Yeni Yorum \t\t #{number}"
   end
 end
 
@@ -78,7 +82,9 @@ class MessageHandler
   end
 
   def Handle(context)
-    puts "Yeni Mesaj \t\t VAR."
+    line = Hpricot(context.to_s.strip)
+    number = line.search("b").innerHTML
+    puts "Yeni Mesaj \t\t #{number}"
   end
 end
 
@@ -90,7 +96,9 @@ class UserCommentHandler
   end
 
   def Handle(context)
-    puts "Yeni Kullanici Yorumu \t\t VAR."
+    line = Hpricot(context.to_s.strip)
+    number = line.search("b").innerHTML
+    puts "Yeni Kullanici Yorumu \t\t #{number}"
   end
 end
 
