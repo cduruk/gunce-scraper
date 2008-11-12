@@ -1,7 +1,6 @@
 # Tum haklari serbesttir.
 # cduruk, wizard
 
-
 require 'rubygems'
 require 'mechanize'
 require 'hpricot'
@@ -26,19 +25,19 @@ doc = form.click_button
 result = Hpricot(doc.root.to_s)
 
 if !((result/".f")[5].inner_html.strip).include? "Yorumunu"
-  puts "Yorumunu okumadigin gunceler var."
+  puts "Gunce Yorumlari \t VAR."
 else
-  puts "Yorumunu okumadigin gunce yok."
+  puts "Gunce Yorumlari \t YOK."
 end
 
-# after the 5th match, existence of the remaining information blocks are not guaranteed
+# after the 5th match, existence of the remaining information  blocks are not guaranteed
 # instead of static conditional blocks, dynamic pattern matching rules can be applied
 
 definitions = [
-    {:pattern => "yorumdan sonra", :text_found => "Senden sonra yapilmis yorumlar var.", :text_notfound => "Senden sonra yapilmis yorum yok.", :found => false},
-    {:pattern => "tane yeni mesaj", :text_found => "Okumadigin mesajlar var.", :text_notfound => "Okumadigin mesaj yok.", :found => false},
-    {:pattern => "yeni yorum", :text_found => "Kullanici sayfanda yeni yorumlar var.", :text_notfound => "Kullanici sayfanda yeni yorum yok.", :found => false},
-    {:pattern => "listesine eklemek isteyen", :text_found => "Dost talepleri var.", :text_notfound => "Dost talebi yok.", :found => false}
+    {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR.", :text_notfound => "Yeni Yorum \t\t YOK.", :found => false},
+    {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR.", :text_notfound => "Yeni Mesaj \t\t YOK.", :found => false},
+    {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR.", :text_notfound => "Yeni Kullanici Yorumu \t YOK.", :found => false},
+    {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR.", :text_notfound => "Dost Talebi \t\t YOK.", :found => false}
 ]
 
 containers = (result/".f")
