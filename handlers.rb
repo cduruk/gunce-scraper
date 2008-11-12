@@ -3,6 +3,9 @@
 
 # HandlerChain class is responsible for calling handlers in the given order.
 # If the context has been handled by any of the handlers, the "Handled" flag is set.
+
+# DiaryComment >> FollowUpComment >> Message >> UserComment >> Friend
+
 class HandlerChain
   attr_reader :Handled
 
@@ -46,7 +49,7 @@ class DiaryCommentHandler
   include IHandler
 
   def initialize
-    @pattern = /Yorumlar/
+    @pattern = /\w/
   end
 
   def Handle(context)
