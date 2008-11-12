@@ -50,7 +50,7 @@ class DiaryCommentHandler
   end
 
   def Handle(context)
-    puts "Gunce Yorumlari \t\t VAR."
+    puts "Gunce Yorumlari \t VAR."
   end
 end
 
