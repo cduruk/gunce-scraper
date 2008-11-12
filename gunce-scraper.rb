@@ -46,7 +46,7 @@ containers = (result/".f")
 containers.each do |container|
     definitions.length.times do |i|
         if (container.innerText).include? definitions[i][:pattern]
-            puts definition[:text_found]
+            puts definitions[i][:text_found]
             notification_flag = true
         end
     end
