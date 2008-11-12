@@ -110,6 +110,7 @@ class FriendHandler
   end
 
   def Handle(context)
-    puts "Dost Talebi \t\t VAR."
+    number = context.to_s.slice(/\d/)
+    puts "Dost Talebi \t\t #{number}"
   end
 end
