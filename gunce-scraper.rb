@@ -11,13 +11,12 @@ if ARGV.length < 2
 end
 
 agent = WWW::Mechanize.new { |agent|
-    agent.user_agent_alias = 'Mac Safari'
-  }
+  agent.user_agent_alias = 'Mac Safari'
+}
 
 page = agent.get 'http://www.guncem.com'
 
 form = page.forms.first
-
 
 notification_flag = false #=> Keep track if there is actually a notification  
 
@@ -36,20 +35,20 @@ end
 # instead of static conditional blocks, dynamic pattern matching rules can be applied
 
 definitions = [
-    {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR."},
-    {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR."},
-    {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR."},
-    {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR."}
+  {:pattern => "yorumdan sonra", :text_found => "Yeni Yorum \t\t VAR."},
+  {:pattern => "tane yeni mesaj", :text_found => "Yeni Mesaj \t\t VAR."},
+  {:pattern => "yeni yorum", :text_found => "Yeni Kullanici Yorumu \t VAR."},
+  {:pattern => "listesine eklemek isteyen", :text_found => "Dost Talebi \t\t VAR."}
 ]
 
 containers = (result/".f")
 containers.each do |container|
-    definitions.length.times do |i|
-        if (container.innerText).include? definitions[i][:pattern]
-            puts definitions[i][:text_found]
-            notification_flag = true
-        end
+  definitions.length.times do |i|
+    if (container.innerText).include? definitions[i][:pattern]
+      puts definitions[i][:text_found]
+      notification_flag = true
     end
+  end
 end
 
 if !notification_flag
