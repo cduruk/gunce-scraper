@@ -18,6 +18,9 @@ page = agent.get 'http://www.guncem.com'
 
 form = page.forms.first
 
+
+notification_flag = false #=> Keep track if there is actually a notification  
+
 form['nick'] = ARGV[0]
 form['pass'] = ARGV[1]
 doc = form.click_button
@@ -26,8 +29,7 @@ result = Hpricot(doc.root.to_s)
 
 if !((result/".f")[5].inner_html.strip).include? "Yorumunu"
   puts "Gunce Yorumlari \t VAR."
-else
-  puts "Gunce Yorumlari \t YOK."
+  notification_flag = true
 end
 
 # after the 5th match, existence of the remaining information  blocks are not guaranteed
@@ -44,15 +46,12 @@ containers = (result/".f")
 containers.each do |container|
     definitions.length.times do |i|
         if (container.innerText).include? definitions[i][:pattern]
-            definitions[i][:found] = true
+            puts definition[:text_found]
+            notification_flag = true
         end
     end
 end
 
-definitions.each do |definition|
-    if definition[:found]
-        puts definition[:text_found]
-    else
-        puts definition[:text_notfound]
-    end
+if !notification_flag
+  puts "Hic bir yeni gelisme yok"
 end
