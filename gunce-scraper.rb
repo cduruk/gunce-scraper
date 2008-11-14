@@ -34,6 +34,7 @@ chain.Add MessageHandler.new
 chain.Add UserCommentHandler.new
 chain.Add FriendHandler.new
 chain.Process containers
+#chain.Print
 
 if !chain.Handled
   puts "Hic bir yeni gelisme yok"

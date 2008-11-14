@@ -12,10 +12,16 @@ class HandlerChain
 
   def initialize
     @handlers = Array.new
+    @itemAmounts = Array.new
+    5.times {@itemAmounts.push 0}
   end
 
   def Add(handler)
     @handlers.push handler
+  end
+  
+  def Print
+    puts @itemAmounts
   end
 
   def Process(items)
@@ -24,6 +30,7 @@ class HandlerChain
       @handlers.each do |handler|
         if handler.Recognize item.innerText # passing text-only data
           handler.Handle item # passing the actual data
+          handler.Report @itemAmounts
           @Handled = true
           break
         end
@@ -44,6 +51,10 @@ module IHandler
   def Handle(context)
     raise Exception.new("Not implemented")
   end
+  
+  def Report(array)
+    raise Exception.new("Not implemented")
+  end
 end
 
 class DiaryCommentHandler
@@ -51,12 +62,17 @@ class DiaryCommentHandler
 
   def initialize
     @pattern = /Yorumlar/
+    @number = 0
   end
 
   def Handle(context)
     line = Hpricot(context.to_s.strip)
-    number = line.search("b").innerHTML
-    puts "Gunce Yorumlari \t #{number}"
+    @number = line.search("b").innerHTML
+    puts "Gunce Yorumlari \t #{@number}"
+  end
+  
+  def Report(array)
+    array[0] = @number
   end
 end
 
@@ -65,12 +81,17 @@ class FollowupCommentHandler
 
   def initialize
     @pattern = /yorumdan sonra/
+    @number = 0
   end
 
   def Handle(context)
     line = Hpricot(context.to_s.strip)
-    number = line.search("b").innerHTML
-    puts "Yeni Yorum \t\t #{number}"
+    @number = line.search("b").innerHTML
+    puts "Yeni Yorum \t\t #{@number}"
+  end
+  
+  def Report(array)
+    array[1] = @number
   end
 end
 
@@ -79,12 +100,17 @@ class MessageHandler
 
   def initialize
     @pattern = /tane yeni mesaj/
+    @number = 0
   end
 
   def Handle(context)
     line = Hpricot(context.to_s.strip)
-    number = line.search("b").innerHTML
-    puts "Yeni Mesaj \t\t #{number}"
+    @number = line.search("b").innerHTML
+    puts "Yeni Mesaj \t\t #{@number}"
+  end
+  
+  def Report(array)
+    array[2] = @number
   end
 end
 
@@ -93,12 +119,17 @@ class UserCommentHandler
 
   def initialize
     @pattern = /yeni yorum/
+    @number = 0
   end
 
   def Handle(context)
     line = Hpricot(context.to_s.strip)
-    number = line.search("b").innerHTML
-    puts "Yeni Kullanici Yorumu \t\t #{number}"
+    @number = line.search("b").innerHTML
+    puts "Yeni Kullanici Yorumu \t\t #{@number}"
+  end
+  
+  def Report(array)
+    array[3] = @number
   end
 end
 
@@ -107,10 +138,15 @@ class FriendHandler
 
   def initialize
     @pattern = /listesine eklemek isteyen/
+    @number = 0
   end
 
   def Handle(context)
-    number = context.to_s.slice(/\d/) # => match any number
-    puts "Dost Talebi \t\t #{number}"
+    @number = context.to_s.slice(/\d/) # => match any number
+    puts "Dost Talebi \t\t #{@number}"
+  end
+  
+  def Report(array)
+    array[4] = @number
   end
 end
